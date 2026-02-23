@@ -20,3 +20,6 @@ NetBIOS Name: CORP
 ## Validation
 - Logged in as CORP\Administrator
 - Verified DNS configuration
+- Confirmed DNS points to 127.0.0.1
+- Verified domain with Get-ADDomain
+- Verified forest with Get-ADForest
