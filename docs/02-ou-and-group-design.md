@@ -24,7 +24,7 @@ corp.local
 - GG_Accounting
 - GG_HR
 
-![Groups Overview](../screenshots/02/02-groups-overview.png)
+![Groups Overview](../screenshots/02/02-group-overview.png)
 *Figure 2 — Global and Domain Local security groups.*
 
 
