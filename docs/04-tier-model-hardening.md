@@ -1,90 +1,169 @@
 # Phase 4 – Tier Model Hardening
 
-## Context
+## Objective
 
-As the lab environment matured through Phase 3.1,
-it became clear that administrative tooling and credential
-placement needed to align with Microsoft's Tier Model.
+Align the Hybrid Identity Lab with Microsoft’s Administrative Tier Model
+to enforce credential boundaries and reduce lateral movement risk.
 
-Before expanding further (Azure integration, workstation
-management, or hybrid identity), privilege boundaries must
-be enforced.
+This phase formalizes privilege separation before introducing:
+- Azure AD Connect
+- Enterprise workstation management
+- Hybrid identity expansion
 
-This phase introduces formal tier separation.
-
+Identity is treated as the root of trust.
 
 ---
 
-## Tier 0 – Identity
+## Background
 
-Account:
+Through Phase 3.1 (Kerberos & Identity Flow), the environment
+successfully demonstrated authentication mechanics.
+
+However, administrative tooling and credential placement were not
+explicitly tier-separated.
+
+Risks identified:
+
+- Potential privilege crossover between servers and identity systems
+- Administrative groups mixed with resource groups
+- Lack of defined logon scope boundaries
+
+This phase corrects that architectural gap.
+
+---
+
+## Tier Model Implementation
+
+### Tier 0 – Identity
+
+**Systems**
+- DC01 (Domain Controller)
+
+**Account**
 - CORP\T0Admin
 
-Group Membership:
+**Group Membership**
 - Domain Admins
 
-Purpose:
-- Manage Domain Controllers
+**Scope**
 - Manage Active Directory
-- Tier 0 systems only
+- Manage Domain Controllers
+- Identity authority only
 
-Security Principle:
-- Never logs into Tier 1 or Tier 2 systems
+**Security Boundary**
+- Tier 0 credentials must never log into Tier 1 or Tier 2 systems.
+- No general-purpose usage (email, browsing, workstation login).
 
 ---
 
-## Tier 1 – Servers
+### Tier 1 – Servers
 
-Security Group:
+**Systems**
+- FS01 (File Server)
+- Future member servers
+
+**Security Group**
 - GG_T1_Server_Admins
 
-Account:
+**Account**
 - CORP\T1Admin
 
-Purpose:
-- Manage member servers
+**Scope**
+- Local administrator on Tier 1 systems
 - No Domain Admin privileges
 - No DC logon rights
 
+**Security Boundary**
+- Tier 1 does not control identity.
+- Tier 1 credentials never access DCs.
+
 ---
 
-## Tier 2 – Workstations
+### Tier 2 – Workstations
 
-Security Group:
+**Systems**
+- CL01
+- Future domain-joined clients
+
+**Security Group**
 - GG_T2_Helpdesk
 
-Account:
+**Account**
 - CORP\HelpdeskT2
 
-Purpose:
+**Scope**
 - Manage workstation configuration
 - Reset standard user passwords (delegated later)
-- No server or DC access
+- No server or DC privileges
+
+**Security Boundary**
+- Tier 2 credentials cannot access servers or domain controllers.
 
 ---
 
-## Design Notes
+## OU Design Enforcement
 
-- Administrative groups are isolated in `OU=Admin\Groups`
-- Administrative users are isolated in `OU=Admin\Users`
-- Resource groups remain in `OU=Groups`
-- Separation prepares environment for:
-  - Logon restrictions
-  - GPO scoping
-  - Privileged Access Workstation (PAW)
-  - Azure AD Connect (future Tier 0 system)
+Administrative identities are isolated:
+
+Corp
+└── Admin
+├── Users
+└── Groups
+
+
+---Separation ensures:
+
+- Clean GPO scoping
+- Security filtering capability
+- Clear privilege auditing
+- Reduced blast radius
+
+---Resource groups remain in:
+
+**Corp\Groups**
+
+Administrative groups are not mixed with business role groups.
+
+---
+
+## Security Rationale
+
+The Tier Model exists to:
+
+- Prevent credential theft escalation
+- Contain compromise impact
+- Protect authentication authority
+- Enforce identity as a security boundary
+
+This prepares the lab for:
+
+- Privileged Access Workstation (PAW)
+- Logon restriction policies
+- Azure AD Connect (Tier 0 classification)
 
 ---
 
 ## Validation
 
-Screenshots captured:
-- Admin OU structure
-- Tier admin group creation
-- Tier admin user placement
+The following controls were validated:
 
-### Evidence
+- Tier admin accounts created and isolated
+- Administrative groups separated from resource groups
+- OU structure refactored to support enforcement
+- Screenshots captured as architectural evidence
+
+---
+
+## Evidence
 
 ![Admin OU Structure](../screenshots/04/01-admin-ou-structure.png)
 ![Admin Groups](../screenshots/04/02-admin-groups.png)
 ![Admin Users](../screenshots/04/03-admin-users.png)
+
+---
+
+## Next Phase
+
+- Remove AD administrative tools from Tier 1 systems
+- Implement logon restrictions
+- Introduce Privileged Access Workstation (PAW)
