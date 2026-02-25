@@ -85,6 +85,6 @@ Screenshots captured:
 
 ### Evidence
 
-![Admin OU Structure](../screenshots/phase1/01-admin-ou-structure.png)
-![Admin Groups](../screenshots/phase1/02-admin-groups.png)
-![Admin Users](../screenshots/phase1/03-admin-users.png)
+![Admin OU Structure](../screenshots/04/01-admin-ou-structure.png)
+![Admin Groups](../screenshots/04/02-admin-groups.png)
+![Admin Users](../screenshots/04/03-admin-users.png)
