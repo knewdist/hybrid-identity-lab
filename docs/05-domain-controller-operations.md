@@ -336,7 +336,7 @@ Confirmed Windows Server Backup feature installed successfully.
 Confirmed dedicated 20GB backup disk (B:) is present and healthy.
 
 
-![Get-Volume Validation](../screenshots/05/05-3-03-get-volume-validation.png)
+![Get-Volume Validation](../screenshots/05/05-3-02-backup-disk-detected.png)
 
 ---
 
