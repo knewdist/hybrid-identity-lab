@@ -52,18 +52,18 @@ Host services remained healthy.
 ## Service Verification
 
 ### PVE Proxy Service Status
-![pveproxy status](screenshots/ops-01-pveproxy-status.png)
+![pveproxy status](../../screenshots/ops-01-pveproxy-status.png)
 
 ### PVE Daemon Service Status
-![pvedaemon status](screenshots/ops-02-pvedaemon-status.png)
+![pvedaemon status](../../screenshots/ops-02-pvedaemon-status.png)
 
 ### PVE Cluster Service Status
-![pve-cluster status](screenshots/ops-03-pve-cluster-status.png)
+![pve-cluster status](../..screenshots/ops-03-pve-cluster-status.png)
 
 ## VM State Validation
 
 Verified running virtual machines via CLI:
 
-![qm list output](screenshots/ops-04-qm-list.png)
+![qm list output](../../screenshots/ops-04-qm-list.png)
 
 
