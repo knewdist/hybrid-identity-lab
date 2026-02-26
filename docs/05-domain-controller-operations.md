@@ -327,7 +327,7 @@ This configuration supports:
 
 Confirmed Windows Server Backup feature installed successfully.
 
-![Windows Server Backup Installation](../../05-domain-controller-operations/screenshots/05-3-01-install-windows-server-backup.png)
+![Windows Server Backup Installation](../../05/05-3-01-install-windows-server-backup.png)
 
 ---
 
@@ -336,7 +336,7 @@ Confirmed Windows Server Backup feature installed successfully.
 Confirmed dedicated 20GB backup disk (B:) is present and healthy.
 
 
-![Get-Volume Validation](../../05-domain-controller-operations/screenshots/05-3-03-get-volume-validation.png)
+![Get-Volume Validation](../../05/05-3-03-get-volume-validation.png)
 
 ---
 
@@ -344,7 +344,7 @@ Confirmed dedicated 20GB backup disk (B:) is present and healthy.
 
 Validated successful manual System State backup.
 
-![Manual Backup Success](../../05-domain-controller-operations/screenshots/05-3-04-manual-backup-success.png)
+![Manual Backup Success](../../05/05-3-04-manual-backup-success.png)
 
 ---
 
@@ -352,7 +352,7 @@ Validated successful manual System State backup.
 
 Confirmed backup version identifier exists and System State is recoverable.
 
-![Backup Version Validation](../../05-domain-controller-operations/screenshots/05-3-05-backup-version-validation.png)
+![Backup Version Validation](../../05/05-3-05-backup-version-validation.png)
 
 ---
 
@@ -360,4 +360,4 @@ Confirmed backup version identifier exists and System State is recoverable.
 
 Confirmed daily System State backup scheduled at 02:00.
 
-![Scheduled Backup Validation](../../05-domain-controller-operations/screenshots/05-3-06-scheduled-backup-validation.png)
+![Scheduled Backup Validation](../../05/05-3-06-scheduled-backup-validation.png)
