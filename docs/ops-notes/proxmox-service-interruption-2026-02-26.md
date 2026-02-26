@@ -58,7 +58,7 @@ Host services remained healthy.
 ![pvedaemon status](../../screenshots/ops-02-pvedaemon-status.png)
 
 ### PVE Cluster Service Status
-![pve-cluster status](../..screenshots/ops-03-pve-cluster-status.png)
+![pve-cluster status](../../screenshots/ops-03-pve-cluster-status.png)
 
 ## VM State Validation
 

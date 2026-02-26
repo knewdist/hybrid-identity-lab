@@ -160,3 +160,204 @@ passed test Replications
 ![KCC Test Pass](../screenshots/05/09-kcc-pass.png)
 ![DCDIAG Final Summary](../screenshots/05/08-dcdiag-final-summary.png)
 ![Replication Summary](../screenshots/05/10-repadmin-summary.png)
+
+
+
+# 05.3 – Domain Controller System State Backup
+
+## 🎯 Objective
+
+Implement, validate, and automate **System State backups** for `DC01` to ensure Active Directory recoverability and domain integrity.
+
+---
+
+## 🖥 Environment
+
+| Component     | Value                |
+|--------------|----------------------|
+| Server       | DC01                 |
+| Role         | Domain Controller    |
+| Backup Target| Dedicated 20GB VHD   |
+| Drive Letter | B:                   |
+| Volume Label | DC01-Backup          |
+| Backup Scope | System State         |
+
+---
+
+## 1️⃣ Install Windows Server Backup
+
+Install the Windows Server Backup feature:
+
+```powershell
+Install-WindowsFeature Windows-Server-Backup -IncludeManagementTools
+```
+
+### Validation
+
+```powershell
+Get-WindowsFeature Windows-Server-Backup
+```
+
+**Expected Result:**  
+`Installed = True`
+
+---
+
+## 2️⃣ Validate Backup Disk
+
+Confirm the dedicated backup disk is present and healthy:
+
+```powershell
+Get-Volume
+```
+
+**Expected Output:**
+
+- DriveLetter: `B`
+- FileSystem: `NTFS`
+- HealthStatus: `Healthy`
+- FileSystemLabel: `DC01-Backup`
+
+---
+
+## 3️⃣ Perform Manual System State Backup (Validation Test)
+
+Execute a one-time backup to validate functionality prior to scheduling:
+
+```powershell
+wbadmin start systemstatebackup -backupTarget:B: -quiet
+```
+
+**Expected Result:**  
+`The backup operation successfully completed.`
+
+### This validates:
+
+- Volume Shadow Copy Service (VSS)
+- NTDS database snapshot
+- SYSVOL backup
+- Registry backup
+- Boot configuration data (BCD)
+
+---
+
+## 4️⃣ Validate Backup Version
+
+Confirm that a backup version exists:
+
+```powershell
+wbadmin get versions
+```
+
+**Expected Output:**
+
+- Backup time
+- Backup target: `B:`
+- Version identifier
+- Recoverable items: `System State`
+
+---
+
+## 5️⃣ Configure Scheduled Daily Backup
+
+Enable automated daily System State backup at **02:00 AM**:
+
+```powershell
+wbadmin enable backup `
+-addtarget:B: `
+-systemstate `
+-schedule:02:00 `
+-quiet
+```
+
+This creates a scheduled task under:
+
+```
+Task Scheduler → Microsoft → Windows → Backup
+```
+
+---
+
+## 6️⃣ Validate Scheduled Configuration
+
+Confirm scheduled backup settings:
+
+```powershell
+wbadmin get configuration
+```
+
+**Expected Output:**
+
+- System State backup: Included
+- Backup location: `B:`
+- Scheduled time: `02:00`
+- Scheduled backup: Enabled
+
+---
+
+## 🔐 Recovery Capability
+
+This configuration supports:
+
+- Non-authoritative restore
+- Authoritative restore (future lab section)
+- NTDS database recovery
+- SYSVOL recovery
+- Registry recovery
+
+---
+
+## 📌 Operational Notes
+
+- Backup disk is dedicated exclusively to `DC01`.
+- Manual backup validation performed prior to scheduling.
+- Daily automated System State backups are enabled.
+- Configuration verified using `wbadmin`.
+
+---
+
+## ✅ Status
+
+**DC01 System State backup successfully implemented, validated, and scheduled.**
+
+
+## Validation
+
+### 1. Windows Server Backup Installation
+
+Confirmed Windows Server Backup feature installed successfully.
+
+![Windows Server Backup Installation](../../05-domain-controller-operations/screenshots/05-3-01-install-windows-server-backup.png)
+
+---
+
+### 2. Backup Disk Detection
+
+Confirmed dedicated 20GB backup disk (B:) is present and healthy.
+
+
+![Get-Volume Validation](../../05-domain-controller-operations/screenshots/05-3-03-get-volume-validation.png)
+
+---
+
+### 3. Manual System State Backup Success
+
+Validated successful manual System State backup.
+
+![Manual Backup Success](../../05-domain-controller-operations/screenshots/05-3-04-manual-backup-success.png)
+
+---
+
+### 4. Backup Version Confirmation
+
+Confirmed backup version identifier exists and System State is recoverable.
+
+![Backup Version Validation](../../05-domain-controller-operations/screenshots/05-3-05-backup-version-validation.png)
+
+---
+
+### 5. Scheduled Backup Configuration
+
+Confirmed daily System State backup scheduled at 02:00.
+
+![Scheduled Backup Validation](../../05-domain-controller-operations/screenshots/05-3-06-scheduled-backup-validation.png)
