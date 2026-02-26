@@ -63,3 +63,100 @@ DC01 currently functions as:
 - RID allocator
 - Time authority (PDC Emulator)
 - Authentication authority
+
+
+## 5.2 Domain Controller Health Validation
+
+Domain controller operational health was validated using built-in diagnostic tools.
+
+---
+
+### Advertising Test
+
+Command:
+dcdiag /s:DC01 /test:Advertising
+
+Result:
+DC01 passed test Advertising.
+
+Validated:
+- DC advertising as Domain Controller
+- LDAP server
+- Key Distribution Center (KDC)
+- Global Catalog
+- Time server
+
+---
+
+### Services Test
+
+Command:
+dcdiag /s:DC01 /test:Services
+
+Result:
+DC01 passed test Services.
+
+Validated:
+- NTDS service
+- DNS service
+- Netlogon
+- RPC
+
+---
+
+### Full Diagnostic
+
+Command:
+dcdiag /s:DC01 /v
+
+Result:
+All critical tests passed including:
+- Connectivity
+- Advertising
+- NetLogons
+- SysVolCheck
+- MachineAccount
+- NCSecDesc
+- Replications
+
+---
+
+### Replication Status
+
+Command:
+repadmin /replsummary
+
+Result:
+Single-DC environment.
+No replication partners.
+No replication failures.
+
+---
+
+### KCC Validation
+
+Command:
+dcdiag /s:DC01 /test:KccEvent
+
+Result:
+DC01 passed test KccEvent.
+
+Conclusion:
+Replication topology engine operating normally.
+
+---
+
+### Evidence
+passed test Advertising
+passed test FrsEvent
+passed test DFSREvent
+passed test SysVolCheck
+passed test MachineAccount
+passed test NCSecDesc
+passed test NetLogons
+passed test Replications
+
+![DCDIAG Header](../screenshots/05/06-dcdiag-header.png)
+![KCC Test Pass](../screenshots/05/09-kcc-pass.png)
+![DCDIAG Final Summary](../screenshots/05/08-dcdiag-final-summary.png)
+![Replication Summary](../screenshots/05/10-repadmin-summary.png)
