@@ -16,26 +16,24 @@ The goal of this lab is to **develop practical IAM, system administration, and t
 
 ---
 
-# Lab Architecture
-Client Workstation (CL01)
-│
-│ Kerberos Authentication
-│
+Client Workstation
+└── CL01
+    │
+    │ Kerberos Authentication
+    │
 Domain Controllers
-├ DC01 (Core)
-└ DC02 (GUI)
-
-│
-│ Identity Management
-│
+├── DC01 (Core)
+└── DC02 (GUI)
+    │
+    │ Identity & Access Management
+    │
 File Server
-└ FS01
-
-│
-│ Hybrid Identity (Phase 8+)
-│
+└── FS01
+    │
+    │ Hybrid Identity (Phase 8+)
+    │
 Microsoft Entra ID
-Tenant: simmonsalanproton.onmicrosoft.com
+└── Tenant: simmonsalanproton.onmicrosoft.com
 
 
 This architecture demonstrates both:
