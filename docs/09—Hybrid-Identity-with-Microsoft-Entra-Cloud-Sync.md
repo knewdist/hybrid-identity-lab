@@ -1,6 +1,3 @@
-
-
-
 ## 🧱 Phase 09 — Hybrid Identity with Microsoft Entra Cloud Sync
 
 ### 🎯 Objective
